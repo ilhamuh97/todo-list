@@ -1,0 +1,62 @@
+<%- include("header") -%>
+<main class="content">
+    <h1 class="text-center fs-3"><%= listTitle %></h1>
+    <div class="list-group mx-0">
+        <% if(toDoList.length===0){ %>
+            <div class="list-group-item gap-2 text-center">
+                <span class="empty-message">
+                    <i>Your today To Do list is empty</i>
+                </span>
+            </div>
+        <% } %>
+        <% toDoList.map((todo)=>{ %>
+            <form class="list-group-item" action="/check" method="POST">
+                <label class=" item-only d-flex gap-3">
+                    <input
+                        class="form-check-input flex-shrink-0"
+                        type='hidden'
+                        value=<%= todo._id %>
+                        name="checkbox"
+                    >
+                    <input
+                        class="form-check-input flex-shrink-0"
+                        type='hidden'
+                        value=<%= listTitle %>
+                        name="listName"
+                    >
+                    <input
+                        class="form-check-input flex-shrink-0"
+                        type="checkbox"
+                        onChange="this.form.submit()"
+                        <%= todo.checked ? "checked" : "" %>
+                    >
+                    <span>
+                         <%= todo.name %>
+                    </span>
+                </label>
+            </form>
+        <%})%>
+        <div class="list-group-item  d-flex gap-2">
+            <form class="input-group" action="/" method="POST">
+                <input
+                    class="form-control new-item mr-1"
+                    type="text" placeholder="New To Do list"
+                    name="newToDo"
+                    autocomplete="off"
+                    required
+                >
+                <div class="input-group-append">
+                    <button
+                        class="btn btn-lg"
+                        type="submit"
+                        name="list"
+                        value=<%= listTitle %>
+                    >
+                        Add
+                    </button>
+                </div>
+            </form>
+         </div>
+    </div>
+</main>
+<%- include("footer") -%>
